@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Aydsko.iRacingData;
+using Aydsko.iRacingData.Member;
 
 Console.WriteLine("Aydsko iRacing Data API Example Console Application");
 
@@ -62,3 +63,15 @@ Console.WriteLine("Request successful!");
 Console.WriteLine($@"Driver name: {myInfoResponse.Data.DisplayName}
 Customer ID: {myInfoResponse.Data.CustomerId}
 Club: {myInfoResponse.Data.ClubName}");
+
+var methods = typeof(IDataClient).GetMethods();
+foreach (var method in methods)
+{
+    Console.WriteLine(method.Name);
+}
+
+var properties = myInfoResponse.Data.GetType().GetProperties();
+foreach (var property in properties)
+{
+    Console.WriteLine($"{property.Name}: {property.GetValue(myInfoResponse.Data)}");
+}
